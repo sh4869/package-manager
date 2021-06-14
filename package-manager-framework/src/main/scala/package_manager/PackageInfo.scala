@@ -1,14 +1,14 @@
 package package_manager
 
-case class PackageBaseInfo(
+case class PackageBaseInfo[V <: Version](
     name: String,
-    version: Version
+    version: V
 )
 
-case class PackageInfo[DependencyType <: Dependency](
-    baseInfo: PackageBaseInfo, 
+case class PackageInfo[DependencyType <: Dependency, V <: Version](
+    baseInfo: PackageBaseInfo[V], 
     dependencies: Seq[DependencyType],
-    conflicts: Seq[ConflictPackage]
+    conflicts: Seq[ConflictPackage[V]]
 ) {
     def version: Version =  baseInfo.version
     def name: String = baseInfo.name

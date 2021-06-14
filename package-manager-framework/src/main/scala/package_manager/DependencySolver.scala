@@ -2,22 +2,24 @@ package package_manager
 
 import scala.collection.mutable.ListBuffer
 
-trait DependencySolver[DependencyType <: Dependency] {
+trait DependencySolver[DependencyType <: Dependency, V <: Version] {
   protected val packageManagerOption: PackageManagerOption
-  protected val packageRegistry: PackageRegistry[DependencyType]
+  protected val packageRegistry: PackageRegistry[DependencyType,V]
+
+  import VersionRange.OneVersionRange
 
   def solve(
-      newPackages: Seq[PackageInstallRequest],
-      remove: Seq[PackageInfo[DependencyType]],
-      installed: Seq[PackageInfo[DependencyType]]
-  ): Set[InstallPackage]
+      newPackages: Seq[PackageInstallRequest[V]],
+      remove: Seq[PackageInfo[DependencyType, V]],
+      installed: Seq[PackageInfo[DependencyType, V]]
+  ): Set[InstallPackage[V]]
 
   def update(
-      installed: Seq[PackageInfo[DependencyType]]
-  ): Set[InstallPackage] = {
+      installed: Seq[PackageInfo[DependencyType, V]]
+  ): Set[InstallPackage[V]] = {
     packageRegistry.update
-    var newPackages = ListBuffer.empty[PackageInstallRequest]
-    var remove = ListBuffer.empty[PackageInfo[DependencyType]]
+    var newPackages = ListBuffer.empty[PackageInstallRequest[V]]
+    var remove = ListBuffer.empty[PackageInfo[DependencyType, V]]
     installed.foreach(pack => {
       val packages = packageRegistry.getPackages(pack.name)
       packages

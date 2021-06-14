@@ -1,7 +1,7 @@
 package package_manager
 
-case class InstallPackage(
-    pack: PackageBaseInfo,
-    requiredBy: Option[PackageBaseInfo],
+case class InstallPackage[V <: Version](
+    pack: PackageBaseInfo[V],
+    requiredBy: Option[PackageBaseInfo[V]],
     installed: Boolean
 )

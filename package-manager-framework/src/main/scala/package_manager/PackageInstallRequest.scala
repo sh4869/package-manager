@@ -1,6 +1,6 @@
 package package_manager
 
-case class PackageInstallRequest(
+case class PackageInstallRequest[V <: Version](
     name: String, 
-    verison: VersionRange
+    verison: VersionRange[V]
 )

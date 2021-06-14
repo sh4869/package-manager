@@ -1,13 +1,13 @@
 package package_manager
 
-trait VersionRange {
-  def acceptVersions(list: Seq[Version]): Seq[Version]
+trait VersionRange[V <: Version] {
+  def acceptVersions(list: Seq[V]): Seq[V]
 }
 
 object VersionRange {
   // version -> VersionRangeへのimplicit
-  implicit class OneVersionRange(val version: Version) extends VersionRange {
-    def acceptVersions(list: Seq[Version]): Seq[Version] =
+  implicit class OneVersionRange[V <: Version](val version: V) extends VersionRange[V] {
+    def acceptVersions(list: Seq[V]): Seq[V] =
       list.filter(_ == version)
   }
 }
