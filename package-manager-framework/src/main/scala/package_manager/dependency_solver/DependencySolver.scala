@@ -1,10 +1,16 @@
-package package_manager
+package package_manager.dependency_solver
+
+import package_manager.Dependency
+import package_manager.PackageInfo
+import package_manager.PackageRegistry
+import package_manager.Version
+import package_manager.VersionRange
 
 import scala.collection.mutable.ListBuffer
 
 trait DependencySolver[D <: Dependency, V <: Version] {
-  protected val packageManagerOption: PackageManagerOption
-  protected val packageRegistry: PackageRegistry[D,V]
+  protected val packageManagerOption: InstallOption
+  protected val packageRegistry: PackageRegistry[D, V]
 
   import VersionRange.OneVersionRange
 
