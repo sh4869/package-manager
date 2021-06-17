@@ -5,11 +5,11 @@ case class PackageBaseInfo[V <: Version](
     version: V
 )
 
-case class PackageInfo[DependencyType <: Dependency, V <: Version](
-    baseInfo: PackageBaseInfo[V], 
-    dependencies: Seq[DependencyType],
+case class PackageInfo[D <: Dependency, V <: Version](
+    baseInfo: PackageBaseInfo[V],
+    dependencies: Seq[D],
     conflicts: Seq[ConflictPackage[V]]
 ) {
-    def version: Version =  baseInfo.version
-    def name: String = baseInfo.name
+  def version: Version = baseInfo.version
+  def name: String = baseInfo.name
 }
